@@ -1,0 +1,481 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\Windows\system32> mongosh "mongodb+srv://cluster0.aoo58l0.mongodb.net/" --apiVersion 1 --username "---" --password "---"
+Current Mongosh Log ID: ***************
+Connecting to:          mongodb+srv://<credentials>@cluster0.aoo58l0.mongodb.net/?appName=mongosh+2.14.3
+Using MongoDB:          8.0.39 (API Version 1)
+Using Mongosh:          2.14.3
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, pseudo-anonymous usage data is collected from interactive and agentic sessions only, and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+Atlas atlas-wmexs8-shard-0 [primary] test> show dbs
+sample_mflix  27.41 MiB
+admin               0 B
+local               0 B
+Atlas atlas-wmexs8-shard-0 [primary] test> use college
+switched to db college
+Atlas atlas-wmexs8-shard-0 [primary] college> db.students.insertOne({
+|     rollNo: 101,
+|     name: "Arun",
+|     dept: "CSE",
+|     marks: 78,
+|     city: "Chennai"
+| })
+{
+  acknowledged: true,
+  insertedId: ObjectId('6b03ba3ced3a868e7594eb1f')
+}
+Atlas atlas-wmexs8-shard-0 [primary] college> db.students.insertMany([
+|     {
+|         rollNo: 102,
+|         name: "Priya",
+|         dept: "ECE",
+|         marks: 85,
+|         city: "Jaipur"
+|     },
+|     {
+|         rollNo: 103,
+|         name: "Karthik",
+|         dept: "CSE",
+|         marks: 62,
+|         city: "Chennai"
+|     },
+|     {
+|         rollNo: 104,
+|         name: "Rahul",
+|         dept: "ME",
+|         marks: 74,
+|         city: "Delhi"
+|     },
+|     {
+|         rollNo: 105,
+|         name: "Suresh",
+|         dept: "CSE",
+|         marks: 91,
+|         city: "Trichy"
+|     }
+| ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6b03ba4bed3a868e7594eb20'),
+    '1': ObjectId('6b03ba4bed3a868e7594eb21'),
+    '2': ObjectId('6b03ba4bed3a868e7594eb22'),
+    '3': ObjectId('6b03ba4bed3a868e7594eb23')
+  }
+}
+Atlas atlas-wmexs8-shard-0 [primary] college> db.students.find()
+[
+  {
+    _id: ObjectId('6b03ba3ced3a868e7594eb1f'),
+    rollNo: 101,
+    name: 'Arun',
+    dept: 'CSE',
+    marks: 78,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03ba4bed3a868e7594eb20'),
+    rollNo: 102,
+    name: 'Priya',
+    dept: 'ECE',
+    marks: 85,
+    city: 'Jaipur'
+  },
+  {
+    _id: ObjectId('6b03ba4bed3a868e7594eb21'),
+    rollNo: 103,
+    name: 'Karthik',
+    dept: 'CSE',
+    marks: 62,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03ba4bed3a868e7594eb22'),
+    rollNo: 104,
+    name: 'Rahul',
+    dept: 'ME',
+    marks: 74,
+    city: 'Delhi'
+  },
+  {
+    _id: ObjectId('6b03ba4bed3a868e7594eb23'),
+    rollNo: 105,
+    name: 'Suresh',
+    dept: 'CSE',
+    marks: 91,
+    city: 'Trichy'
+  }
+]
+Atlas atlas-wmexs8-shard-0 [primary] college>
+
+Atlas atlas-wmexs8-shard-0 [primary] college> // Display only CSE students
+
+Atlas atlas-wmexs8-shard-0 [primary] college> db.students.find({ dept: "CSE" })
+[
+  {
+    _id: ObjectId('6b03ba3ced3a868e7594eb1f'),
+    rollNo: 101,
+    name: 'Arun',
+    dept: 'CSE',
+    marks: 78,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03ba4bed3a868e7594eb21'),
+    rollNo: 103,
+    name: 'Karthik',
+    dept: 'CSE',
+    marks: 62,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03ba4bed3a868e7594eb23'),
+    rollNo: 105,
+    name: 'Suresh',
+    dept: 'CSE',
+    marks: 91,
+    city: 'Trichy'
+  }
+]
+Atlas atlas-wmexs8-shard-0 [primary] college> db.students.updateOne(
+|     { rollNo: 103 },
+|     { $set: { marks: 68 } }
+| )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-wmexs8-shard-0 [primary] college> db.students.updateMany(
+|     { dept: "CSE" },
+|     { $set: { semester: 3 } }
+| )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+Atlas atlas-wmexs8-shard-0 [primary] college> db.students.deleteOne({
+|     rollNo: 104
+Atlas atlas-wmexs8-shard-0 [primary] college> db.students.countDocuments()
+4
+Atlas atlas-wmexs8-shard-0 [primary] college> use hr
+switched to db hr
+Atlas atlas-wmexs8-shard-0 [primary] hr>
+
+Atlas atlas-wmexs8-shard-0 [primary] hr> db.employees.insertMany([
+|     {
+|         empId: 1,
+|         name: "Anita",
+|         dept: "HR",
+|         salary: 42000,
+|         city: "Chennai"
+|     },
+|     {
+|         empId: 2,
+|         name: "Bala",
+|         dept: "IT",
+|         salary: 65000,
+|         city: "Bengaluru"
+|     },
+|     {
+|         empId: 3,
+|         name: "Charan",
+|         dept: "IT",
+|         salary: 58000,
+|         city: "Chennai"
+|     },
+|     {
+|         empId: 4,
+|         name: "Deepa",
+|         dept: "Finance",
+|         salary: 50000,
+|         city: "Mumbai"
+|     },
+|     {
+|         empId: 5,
+|         name: "Elan",
+|         dept: "IT",
+|         salary: 72000,
+|         city: "Chennai"
+|     },
+|     {
+|         empId: 6,
+|         name: "Farah",
+|         dept: "HR",
+|         salary: 45000,
+|         city: "Delhi"
+|     },
+|     {
+|         empId: 7,
+|         name: "Gopal",
+|         dept: "Finance",
+|         salary: 61000,
+|         city: "Chennai"
+|     },
+|     {
+|         empId: 8,
+|         name: "Hema",
+|         dept: "Sales",
+|         salary: 38000,
+|         city: "Hyderabad"
+|     }
+| ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6b03bb5ded3a868e7594eb24'),
+    '1': ObjectId('6b03bb5ded3a868e7594eb25'),
+    '2': ObjectId('6b03bb5ded3a868e7594eb26'),
+    '3': ObjectId('6b03bb5ded3a868e7594eb27'),
+    '4': ObjectId('6b03bb5ded3a868e7594eb28'),
+    '5': ObjectId('6b03bb5ded3a868e7594eb29'),
+    '6': ObjectId('6b03bb5ded3a868e7594eb2a'),
+    '7': ObjectId('6b03bb5ded3a868e7594eb2b')
+  }
+}
+Atlas atlas-wmexs8-shard-0 [primary] hr> db.employees.find({
+|     salary: { $gt: 60000 }
+| })
+[
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb25'),
+    empId: 2,
+    name: 'Bala',
+    dept: 'IT',
+    salary: 65000,
+    city: 'Bengaluru'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb28'),
+    empId: 5,
+    name: 'Elan',
+    dept: 'IT',
+    salary: 72000,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb2a'),
+    empId: 7,
+    name: 'Gopal',
+    dept: 'Finance',
+    salary: 61000,
+    city: 'Chennai'
+  }
+]
+Atlas atlas-wmexs8-shard-0 [primary] hr> db.employees.find({
+|     salary: {
+|         $gte: 45000,
+|         $lte: 60000
+|     }
+| })
+[
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb26'),
+    empId: 3,
+    name: 'Charan',
+    dept: 'IT',
+    salary: 58000,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb27'),
+    empId: 4,
+    name: 'Deepa',
+    dept: 'Finance',
+    salary: 50000,
+    city: 'Mumbai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb29'),
+    empId: 6,
+    name: 'Farah',
+    dept: 'HR',
+    salary: 45000,
+    city: 'Delhi'
+  }
+]
+Atlas atlas-wmexs8-shard-0 [primary] hr> db.employees.find({
+|     dept: { $in: ["IT", "Finance"] }
+| })
+[
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb25'),
+    empId: 2,
+    name: 'Bala',
+    dept: 'IT',
+    salary: 65000,
+    city: 'Bengaluru'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb26'),
+    empId: 3,
+    name: 'Charan',
+    dept: 'IT',
+    salary: 58000,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb27'),
+    empId: 4,
+    name: 'Deepa',
+    dept: 'Finance',
+    salary: 50000,
+    city: 'Mumbai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb28'),
+    empId: 5,
+    name: 'Elan',
+    dept: 'IT',
+    salary: 72000,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb2a'),
+    empId: 7,
+    name: 'Gopal',
+    dept: 'Finance',
+    salary: 61000,
+    city: 'Chennai'
+  }
+]
+Atlas atlas-wmexs8-shard-0 [primary] hr> db.employees.find({
+|     $and: [
+|         { city: "Chennai" },
+|         { salary: { $gt: 50000 } }
+|     ]
+| })
+[
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb26'),
+    empId: 3,
+    name: 'Charan',
+    dept: 'IT',
+    salary: 58000,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb28'),
+    empId: 5,
+    name: 'Elan',
+    dept: 'IT',
+    salary: 72000,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb2a'),
+    empId: 7,
+    name: 'Gopal',
+    dept: 'Finance',
+    salary: 61000,
+    city: 'Chennai'
+  }
+]
+Atlas atlas-wmexs8-shard-0 [primary] hr> db.employees.find({
+|     $or: [
+|         { dept: "HR" },
+|         { salary: { $gt: 70000 } }
+|     ]
+| })
+[
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb24'),
+    empId: 1,
+    name: 'Anita',
+    dept: 'HR',
+    salary: 42000,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb28'),
+    empId: 5,
+    name: 'Elan',
+    dept: 'IT',
+    salary: 72000,
+    city: 'Chennai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb29'),
+    empId: 6,
+    name: 'Farah',
+    dept: 'HR',
+    salary: 45000,
+    city: 'Delhi'
+  }
+]
+Atlas atlas-wmexs8-shard-0 [primary] hr> db.employees.find({
+|     city: {
+|         $nin: ["Chennai", "Bengaluru"]
+|     }
+| })
+[
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb27'),
+    empId: 4,
+    name: 'Deepa',
+    dept: 'Finance',
+    salary: 50000,
+    city: 'Mumbai'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb29'),
+    empId: 6,
+    name: 'Farah',
+    dept: 'HR',
+    salary: 45000,
+    city: 'Delhi'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb2b'),
+    empId: 8,
+    name: 'Hema',
+    dept: 'Sales',
+    salary: 38000,
+    city: 'Hyderabad'
+  }
+]
+Atlas atlas-wmexs8-shard-0 [primary] hr> db.employees.find(
+|     {},e: {
+|     {   $regex: "^[ABC]"
+|         _id: 0,
+|         name: 1,
+|         salary: 1
+|     }
+| ).sort(ObjectId('6b03bb5ded3a868e7594eb24'),
+|     { salary: -1 }
+| ).skip(2).limit(3)
+[   dept: 'HR',
+  { name: 'Gopal', salary: 61000 },
+  { name: 'Charan', salary: 58000 },
+  { name: 'Deepa', salary: 50000 }
+] {
+Atlas atlas-wmexs8-shard-0 [primary] hr>
+    empId: 2,
+    name: 'Bala',
+    dept: 'IT',
+    salary: 65000,
+    city: 'Bengaluru'
+  },
+  {
+    _id: ObjectId('6b03bb5ded3a868e7594eb26'),
+    empId: 3,
+    name: 'Charan',
+    dept: 'IT',
+    salary: 58000,
+    city: 'Chennai'
+  }
+]
+
